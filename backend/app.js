@@ -18,11 +18,12 @@ app.use(
   })
 );
 
-// Serve static files from the "public" directory
-app.use(express.static(path.join(__dirname, "public")));
-// Catch-all route to serve the frontend
+// Serve static files
+app.use(express.static(path.join(__dirname, "public/dist")));
+
+// Fallback route for SPA
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "public/dist/index.html"));
 });
 
 app.use(requestLogger); // Logging middleware

@@ -60,6 +60,14 @@ website.com/
 backend/
 |── node_modules/
 │   |── packages ...
+|── public/
+│   |── index.html
+│   |── profile-picture.png
+│   |── favicon.ico
+│   |── logo.svg
+│   |── dist/
+│   │   |── index-[code].js
+│   │   |── index-[code].css
 |── src/
 │   |── config/
 │   │   |── db.js
