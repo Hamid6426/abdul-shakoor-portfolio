@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function cta() {
+export default function CTA() {
   return (
     <section className="py-16 bg-gray-900 text-white mb-6">
       <div className="max-w-5xl mx-auto px-6 text-center">

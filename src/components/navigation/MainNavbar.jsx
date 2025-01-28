@@ -19,10 +19,9 @@ const Navbar = () => {
 
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex space-x-8">
-          <a href="/" className="hover:text-[#0ff]">Home</a>
-          <a href="/about" className="hover:text-[#0ff]">About</a>
-          <a href="/projects" className="hover:text-[#0ff]">Projects</a>
+          <a href="/" className="hover:text-[#0ff]">About</a>
           <a href="/blogs" className="hover:text-[#0ff]">Blogs</a>
+          <a href="/projects" className="hover:text-[#0ff]">Projects</a>
           <a href="/contact" className="hover:text-[#0ff]">Contact</a>
         </div>
 
@@ -44,10 +43,9 @@ const Navbar = () => {
 
       {/* Mobile Navigation Links */}
       <div className={`md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'} bg-gray-800`}>
-        <a href="/" className="block py-2 px-6 text-white hover:bg-gray-700">Home</a>
-        <a href="/about" className="block py-2 px-6 text-white hover:bg-gray-700">About</a>
-        <a href="/projects" className="block py-2 px-6 text-white hover:bg-gray-700">Projects</a>
+        <a href="/" className="block py-2 px-6 text-white hover:bg-gray-700">About</a>
         <a href="/blogs" className="block py-2 px-6 text-white hover:bg-gray-700">Blogs</a>
+        <a href="/projects" className="block py-2 px-6 text-white hover:bg-gray-700">Projects</a>
         <a href="/contact" className="block py-2 px-6 text-white hover:bg-gray-700">Contact</a>
       </div>
     </nav>

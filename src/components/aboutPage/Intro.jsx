@@ -3,6 +3,7 @@ import React from "react";
 export default function Intro() {
   return (
     <div className="my-8 px-4 sm:px-6 lg:px-8 flex items-center flex-col">
+      
       <h1 className="text-4xl md:text-5xl font-bold">Dr. Abdul Shakoor</h1>
       <p className="mt-4 text-xl">
         Distinguished Professor at the University of Engineering & Technology,
