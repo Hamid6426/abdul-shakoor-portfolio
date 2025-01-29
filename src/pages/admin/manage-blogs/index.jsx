@@ -24,7 +24,7 @@ const BlogsPage = () => {
     return <div>Error: {error}</div>;
   }
 
-  const filteredBlogs = Array.isArray(blogs.data) ? blogs.data : [];
+  const filteredBlogs = Array.isArray(blogs) ? blogs : [];
 
   return (
     <div className="container mx-auto p-4" style={{ maxWidth: "768px" }}>
@@ -50,7 +50,7 @@ const BlogsPage = () => {
               </div>
               <div className="flex flex-row gap-4 w-full justify-end">
                 <BlogDeleteButton blogId={blog._id} onDeleteSuccess={() => setBlogs(prevBlogs => prevBlogs.filter(b => b._id !== blog._id))} />
-                <BlogUpdateButton blogId={blog._id} />
+                <BlogUpdateButton slug={blog.slug} /> {/* Updated prop name */}
               </div>
             </div>
           ))}

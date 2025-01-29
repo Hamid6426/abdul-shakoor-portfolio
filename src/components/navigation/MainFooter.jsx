@@ -43,7 +43,7 @@ const MainFooter = () => {
   return (
     <footer className="bg-gray-100 text-black dark:text-white dark:bg-gray-950 text-white py-12 border-t border-t-2 border-gray-500">
       {/* Grid Wrapper */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-6">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-6 text-black dark:text-white">
         {/* Dynamically Render Sections */}
         {footerSections.map((section, index) => (
           <section key={index}>

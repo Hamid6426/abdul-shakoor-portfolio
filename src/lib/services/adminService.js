@@ -40,4 +40,32 @@ export const getAdminByIdAndDelete = async (id) => {
   }
 };
 
+export const getAdminByIdAndPatch = async (id, updateData) => {
+  try {
+    if (!id || typeof updateData !== 'object' || Object.keys(updateData).length === 0) {
+      throw new Error('Invalid input data');
+    }
+
+    // Prevent updating the password through this function
+    if (updateData.password) {
+      throw new Error('Password update is not allowed via this function');
+    }
+
+    const patchedAdmin = await Admin.findByIdAndUpdate( // findByIdAndUpdate = internal function
+      id,
+      { $set: updateData },
+      { new: true, runValidators: true } // Ensures data validation
+    ).lean(); // Optional: Converts Mongoose object to plain JavaScript object
+
+    if (!patchedAdmin) {
+      throw new Error('Admin not found');
+    }
+
+    return patchedAdmin;
+  } catch (error) {
+    console.error('Error patching admin data:', error);
+    throw new Error(error.message || 'Error patching admin data');
+  }
+};
+
 

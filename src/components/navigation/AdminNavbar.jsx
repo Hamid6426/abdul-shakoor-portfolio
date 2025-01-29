@@ -30,8 +30,8 @@ const AdminNavbar = () => {
       color: "hover:text-blue-400",
     },
     {
-      name: "Account Settings",
-      href: "/admin/account-settings",
+      name: "Settings",
+      href: "/admin/settings",
       icon: <MdSettings size={24} />,
       color: "hover:text-blue-400",
     },
@@ -50,7 +50,7 @@ const AdminNavbar = () => {
   ];
 
   return (
-    <nav className="bg-gray-900 absolute h-full min-h-screen w-20 p-2 text-white">
+    <nav className="absolute left-0 top-0 z-5 pt-4 bg-gray-100 text-black dark:text-white dark:bg-gray-950 text-black border-r border-r-2 border-gray-500 absolute h-full min-h-screen w-20 p-2">
       <ul className="space-y-6">
         {navItems.map((item, index) => (
           <li key={index}>

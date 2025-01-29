@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from '@/utils/axiosConfig';
 import { useRouter } from 'next/router';
-import useFetchBlog from '@/utils/useFetchBlog';
 
 const UpdateBlogPage = () => {
   const [formData, setFormData] = useState({
@@ -12,9 +11,29 @@ const UpdateBlogPage = () => {
     author: ''
   });
   const router = useRouter();
-  const { id } = router.query;
-  const { blog, loading, error } = useFetchBlog(id);
-7
+  const { slug } = router.query;
+  const [blog, setBlog] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (!slug) return;
+
+    const fetchBlog = async () => {
+      try {
+        const response = await axios.get(`/blogs/slug/${slug}`);
+        setBlog(response.data);
+      } catch (error) {
+        setError("Failed to load blog");
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlog();
+  }, [slug]);
+
   useEffect(() => {
     if (blog) {
       setFormData({
@@ -34,19 +53,20 @@ const UpdateBlogPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/blogs/update-blog/${id}`, formData);
+      await axios.put(`/blogs/slug/${slug}`, formData); // Use slug here
       router.push('/admin/manage-blogs'); // Redirect to the blogs list page
     } catch (error) {
+      setError('Failed to update blog');
       console.error('Failed to update blog:', error);
     }
   };
-
+  
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="text-center text-gray-800 dark:text-gray-200">Loading...</div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="text-center text-red-500 dark:text-red-400">Error: {error}</div>;
   }
 
   return (
