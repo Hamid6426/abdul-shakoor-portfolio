@@ -1,55 +1,60 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { usePathname } from "next/navigation";
+import { MdMenu, MdClose } from "react-icons/md"; // Import icons
+import ThemeToggle from "../buttons/ThemeToggle";
 
-const Navbar = () => {
+const MainNavbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname(); // Get current route
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  // Function to check if a link is active
+  const getLinkClass = (path) =>
+    pathname === path
+      ? "text-blue-700 dark:text-blue-700 hover:text-blue-500" // Active link styles
+      : "hover:text-gray-500";
+
   return (
-    <nav className="bg-gray-900 text-white shadow-md">
+    <nav className="bg-gray-100 text-black dark:text-white dark:bg-gray-950 text-white border-b border-b-2 border-gray-500">
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo Section */}
-        <div className="text-2xl font-bold text-[#0ff]">
-          <a href="/">Dr. Shakoor</a>
+        <div className="text-2xl font-bold text-gray-950">
+          <a href="/" className="dark:text-white">
+            Dr. Abdul Shakoor
+          </a>
         </div>
 
         {/* Desktop Navigation Links */}
-        <div className="hidden md:flex space-x-8">
-          <a href="/" className="hover:text-[#0ff]">About</a>
-          <a href="/blogs" className="hover:text-[#0ff]">Blogs</a>
-          <a href="/projects" className="hover:text-[#0ff]">Projects</a>
-          <a href="/contact" className="hover:text-[#0ff]">Contact</a>
+        <div className="hidden md:flex space-x-8 text-black font-bold dark:text-white">
+          <a href="/" className={getLinkClass("/")}>About</a>
+          <a href="/blogs" className={getLinkClass("/blogs")}>Blogs</a>
+          <a href="/projects" className={getLinkClass("/projects")}>Projects</a>
+          <a href="/contact" className={getLinkClass("/contact")}>Contact</a>
+          <ThemeToggle />
         </div>
 
         {/* Mobile Menu Button */}
         <div className="md:hidden">
-          <button onClick={toggleMobileMenu} className="text-white focus:outline-none">
-            {isMobileMenuOpen ? (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            )}
+          <button onClick={toggleMobileMenu} className="text-white focus:outline-none text-2xl">
+            {isMobileMenuOpen ? <MdClose /> : <MdMenu />}
           </button>
         </div>
       </div>
 
       {/* Mobile Navigation Links */}
-      <div className={`md:hidden ${isMobileMenuOpen ? 'block' : 'hidden'} bg-gray-800`}>
-        <a href="/" className="block py-2 px-6 text-white hover:bg-gray-700">About</a>
-        <a href="/blogs" className="block py-2 px-6 text-white hover:bg-gray-700">Blogs</a>
-        <a href="/projects" className="block py-2 px-6 text-white hover:bg-gray-700">Projects</a>
-        <a href="/contact" className="block py-2 px-6 text-white hover:bg-gray-700">Contact</a>
+      <div className={`md:hidden ${isMobileMenuOpen ? "block" : "hidden"} bg-gray-800`}>
+        <a href="/" className={`block py-2 px-6 text-white ${getLinkClass("/")}`}>About</a>
+        <a href="/blogs" className={`block py-2 px-6 text-white ${getLinkClass("/blogs")}`}>Blogs</a>
+        <a href="/projects" className={`block py-2 px-6 text-white ${getLinkClass("/projects")}`}>Projects</a>
+        <a href="/contact" className={`block py-2 px-6 text-white ${getLinkClass("/contact")}`}>Contact</a>
       </div>
     </nav>
   );
 };
 
-export default Navbar;
+export default MainNavbar;

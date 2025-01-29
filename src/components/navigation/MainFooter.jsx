@@ -41,16 +41,16 @@ const MainFooter = () => {
   };
 
   return (
-    <footer className="bg-gray-900 text-white py-12">
+    <footer className="bg-gray-100 text-black dark:text-white dark:bg-gray-950 text-white py-12 border-t border-t-2 border-gray-500">
       {/* Grid Wrapper */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-6">
         {/* Dynamically Render Sections */}
         {footerSections.map((section, index) => (
           <section key={index}>
-            <h2 className="text-xl text-[#0ff] font-bold mb-6">{section.title}</h2>
+            <h2 className="text-xl text-blue-600 font-bold mb-6">{section.title}</h2>
             <nav className="flex flex-col gap-4">
               {section.links.map((link, idx) => (
-                <a key={idx} href={link.href} className="hover:text-[#0ff]">
+                <a key={idx} href={link.href} className="hover:text-gray-500">
                   {link.name}
                 </a>
               ))}
@@ -60,12 +60,12 @@ const MainFooter = () => {
 
         {/* Expert Information */}
         <section>
-          <h2 className="text-xl text-[#0ff] font-bold mb-6">{expertInfo.title}</h2>
+          <h2 className="text-xl text-blue-600 font-bold mb-6">{expertInfo.title}</h2>
           <p className="mb-4">{expertInfo.description}</p>
           <address className="not-italic">
             {expertInfo.contact.map((item, idx) => (
               <p key={idx} className="mb-2">
-                <span className="text-[#0ff] font-bold">{item.label}:</span> {item.value}
+                <span className="text-blue-600 font-bold">{item.label}:</span> {item.value}
               </p>
             ))}
           </address>
@@ -73,8 +73,8 @@ const MainFooter = () => {
       </div>
 
       {/* Bottom Footer */}
-      <div className="mt-12 text-center text-sm text-gray-400">
-        © {new Date().getFullYear()} <a href="/admin">Abdul Shakoor</a>. All rights reserved.
+      <div className="mt-8 text-center text-sm text-gray-600">
+        © {new Date().getFullYear()} <a href="/admin/dashboard">Abdul Shakoor</a>. All rights reserved.
       </div>
     </footer>
   );

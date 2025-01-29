@@ -1,36 +1,42 @@
 import mongoose from 'mongoose';
 
-let isConnected; // Global variable to track the connection status
+let cached = global.mongoose;
+
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null, timeout: null };
+}
 
 const connectDB = async () => {
-  if (isConnected) {
-    console.log('Already connected to the database');
-    return;
+  if (cached.conn) {
+    // Clear any scheduled disconnection
+    if (cached.timeout) {
+      clearTimeout(cached.timeout);
+      cached.timeout = null;
+    }
+    return cached.conn;
   }
 
-  try {
-    await mongoose.connect(process.env.MONGO_URI, {});
-    isConnected = true;
-    console.log('Connected to the database');
-  } catch (error) {
-    console.error('Error connecting to the database', error.message);
-    throw new Error('Error connecting to the database');
+  if (!cached.promise) {
+    cached.promise = mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }).then((mongoose) => {
+      return mongoose;
+    });
   }
+
+  cached.conn = await cached.promise;
+  return cached.conn;
 };
 
-const disconnectDB = async () => {
-  if (!isConnected) {
-    console.log('No active database connection to close');
-    return;
-  }
-
-  try {
-    await mongoose.connection.close();
-    isConnected = false;
-    console.log('Database connection closed');
-  } catch (error) {
-    console.error('Error closing the database connection', error.message);
-    throw new Error('Error closing the database connection');
+const disconnectDB = async (delay = 10000) => {
+  if (cached.conn) {
+    cached.timeout = setTimeout(async () => {
+      await mongoose.connection.close();
+      cached.conn = null;
+      cached.promise = null;
+      console.log('Database connection closed after delay');
+    }, delay);
   }
 };
 
