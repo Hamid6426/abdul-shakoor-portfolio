@@ -1,6 +1,7 @@
 import { registerAdmin } from '@/lib/services/authService';
 
 export default async function handler(req, res) {
+  await cors(req, res);
   try {
     const { fullName, email, password } = req.body;
     // Basic validation

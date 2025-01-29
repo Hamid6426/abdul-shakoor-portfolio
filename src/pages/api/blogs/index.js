@@ -2,6 +2,7 @@ import { createBlog, getAllBlogs } from "@/lib/services/blogService";
 import authMiddleware from "@/lib/middlewares/authMiddleware";
 
 export default async function handler(req, res) {
+  await cors(req, res);
   switch (req.method) {
     case 'GET':
       try {

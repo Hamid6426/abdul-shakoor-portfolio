@@ -2,6 +2,7 @@ import { getBlogById, getBlogByIdAndUpdate, getBlogByIdAndDelete } from "@/lib/s
 import authMiddleware from "@/lib/middlewares/authMiddleware";
 
 export default async function handler(req, res) {
+  await cors(req, res);
   const { id } = req.query;
 
   if (!id) {

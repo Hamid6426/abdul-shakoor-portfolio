@@ -11,6 +11,8 @@ export default async function handler(req, res) {
     });
   }
 
+  await cors(req, res);
+  
   await authMiddleware(req, res, async () => {
     switch (req.method) {
       case 'GET':

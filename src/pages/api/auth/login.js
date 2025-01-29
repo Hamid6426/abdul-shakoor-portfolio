@@ -1,6 +1,7 @@
 import { loginAdmin } from '@/lib/services/authService';
 
 export default async function handler(req, res) {
+  await cors(req, res);
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method Not Allowed" });
   }

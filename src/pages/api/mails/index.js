@@ -2,6 +2,7 @@ import { createMail, getAllMails } from "@/lib/services/mailService";
 import authMiddleware from "@/lib/middlewares/authMiddleware";
 
 export default async function handler(req, res) {
+  await cors(req, res);
   switch (req.method) {
     case "GET":
       await authMiddleware(req, res, async () =>  {

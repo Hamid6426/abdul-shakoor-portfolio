@@ -2,6 +2,7 @@ import { connectDB, disconnectDB } from '@/lib/config/db';
 import Blog from '@/lib/models/Blog';
 
 export default async function handler(req, res) {
+  await cors(req, res);
   const { slug } = req.query;
 
   if (req.method === 'GET') {

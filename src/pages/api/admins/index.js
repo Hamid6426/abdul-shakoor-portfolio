@@ -2,6 +2,7 @@ import { getAllAdmins } from '@/lib/services/adminService';
 import authMiddleware from "@/lib/middlewares/authMiddleware";
 
 export default async function handler(req, res) {
+  await cors(req, res);
   await authMiddleware(req, res, async () => {
     switch (req.method) {
       case 'GET':
