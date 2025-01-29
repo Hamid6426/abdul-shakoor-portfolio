@@ -1,5 +1,6 @@
 import { createMail, getAllMails } from "@/lib/services/mailService";
 import authMiddleware from "@/lib/middlewares/authMiddleware";
+import cors from "@/lib/middlewares/cors";
 
 export default async function handler(req, res) {
   await cors(req, res);

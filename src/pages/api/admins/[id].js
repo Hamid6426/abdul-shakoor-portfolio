@@ -1,7 +1,9 @@
 import { getAdminById, getAdminByIdAndUpdate, getAdminByIdAndDelete, getAdminByIdAndPatch } from "@/lib/services/adminService";
 import authMiddleware from "@/lib/middlewares/authMiddleware";
+import cors from "@/lib/middlewares/cors";
 
 export default async function handler(req, res) {
+  await cors(req, res);
   const { id } = req.query;
 
   if (!id) {
@@ -11,8 +13,7 @@ export default async function handler(req, res) {
     });
   }
 
-  await cors(req, res);
-  
+
   await authMiddleware(req, res, async () => {
     switch (req.method) {
       case 'GET':

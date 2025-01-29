@@ -1,5 +1,6 @@
 import { getAllAdmins } from '@/lib/services/adminService';
 import authMiddleware from "@/lib/middlewares/authMiddleware";
+import cors from "@/lib/middlewares/cors";
 
 export default async function handler(req, res) {
   await cors(req, res);

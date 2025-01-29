@@ -1,4 +1,5 @@
 import { loginAdmin } from '@/lib/services/authService';
+import cors from "@/lib/middlewares/cors";
 
 export default async function handler(req, res) {
   await cors(req, res);

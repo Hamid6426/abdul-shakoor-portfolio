@@ -1,5 +1,6 @@
 import { connectDB, disconnectDB } from '@/lib/config/db';
 import Blog from '@/lib/models/Blog';
+import cors from "@/lib/middlewares/cors";
 
 export default async function handler(req, res) {
   await cors(req, res);
