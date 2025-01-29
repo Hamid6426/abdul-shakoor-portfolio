@@ -50,8 +50,8 @@ export default function PatchFullName() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded">
-      <label htmlFor="fullName" className="block text-gray-700">Full Name</label>
+    <form onSubmit={handleSubmit} className="p-4 border rounded w-full">
+      <label htmlFor="fullName" className="block text-black dark:text-white">Full Name</label>
       <input
         type="text"
         id="fullName"

@@ -41,17 +41,12 @@ const AdminNavbar = () => {
       icon: <MdSupport size={24} />,
       color: "hover:text-blue-400",
     },
-    {
-      name: "Sign Out",
-      href: "/admin/signout",
-      icon: <MdExitToApp size={24} />,
-      color: "text-red-500 hover:text-red-400",
-    },
   ];
 
   return (
-    <nav className="absolute left-0 top-0 z-5 pt-4 bg-gray-100 text-black dark:text-white dark:bg-gray-950 text-black border-r border-r-2 border-gray-500 absolute h-full min-h-screen w-20 p-2">
-      <ul className="space-y-6">
+    <nav className="flex justify-between w-full bg-gray-100 dark:text-white dark:bg-gray-950 text-black border-b-2 border-gray-500">
+      <div className="flex justify-between items-center  w-full max-w-7xl pl-4 pr-3 py-4 mx-auto">
+      <ul className="flex w-full gap-x-6">
         {navItems.map((item, index) => (
           <li key={index}>
             <a
@@ -64,6 +59,10 @@ const AdminNavbar = () => {
           </li>
         ))}
       </ul>
+      <button className="text-red-500 hover:text-gray-500">
+        <MdExitToApp size={24} />
+      </button>
+      </div>
     </nav>
   );
 };

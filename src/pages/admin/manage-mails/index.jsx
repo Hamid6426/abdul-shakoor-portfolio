@@ -2,14 +2,15 @@ import { useState, useEffect } from "react";
 import useFetchMails from "@/utils/useFetchMails";
 import axios from "@/utils/axiosConfig";
 import { FaTrash } from "react-icons/fa";
+import AdminNavbar from "@/components/navigation/AdminNavbar";
 
 const MailsPage = () => {
-  const { mails, loading, error: fetchError, setMails } = useFetchMails();
-  const [error, setError] = useState(fetchError);
+  const { mails, loading: mailsLoading, error: mailError, setMails } = useFetchMails();
+  const [error, setError] = useState(mailError);
 
   useEffect(() => {
-    setError(fetchError);
-  }, [fetchError]);
+    setError(mailError);
+  }, [mailError]);
 
   useEffect(() => {
     console.log('Fetched mails:', mails); // Log fetched mails
@@ -27,38 +28,47 @@ const MailsPage = () => {
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
+  if (mailsLoading) {
+    return <div className="flex items-center justify-center min-h-screen">
+      <div className="text-white">Loading...</div>
+    </div>;
   }
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="flex items-center justify-center min-h-screen">
+      <div className="text-red-500">Error: {error}</div>
+    </div>;
   }
 
-  const filteredMails = Array.isArray(mails.data) ? mails.data : [];
+  const filteredMails = Array.isArray(mails) ? mails : [];
 
   return (
-    <div className="container mx-auto p-4" style={{ maxWidth: "768px" }}>
-      <h1 className="text-3xl mb-4">All Mails</h1>
+    <>
+    <AdminNavbar/>
+    <div className="py-8 w-full">
+    <div className="container mx-auto p-4 max-w-xl min-h-screen bg-gray-900 text-gray-100">
+      <h1 className="text-4xl mb-8 font-bold text-center">All Mails</h1>
       {filteredMails.length === 0 ? (
-        <p className="text-center">No mails found</p>
+        <p className="text-center text-gray-400">No mails found</p>
       ) : (
-        <div className="grid gap-4 grid-cols-1">
+        <div className="space-y-4">
           {filteredMails.map((mail) => (
-            <div key={mail._id} className="bg-white border-gray-300 border-2 p-4 rounded-lg">
-              <h2 className="text-lg font-bold pb-3 border-b-2">
+            <div key={mail._id} className="bg-gray-800 p-6 rounded-lg shadow-lg">
+              <h2 className="text-2xl font-bold pb-2 border-b border-gray-700">
                 {mail.firstName} {mail.lastName}
               </h2>
-              <p className="py-3 border-b-2"><strong>Sender Email:</strong> {mail.email}</p>
-              <h3 className="text-lg font-bold p-3 bg-gray-200">{mail.subject}</h3>
-              <p className="py-3">{mail.message}</p>
-              <div className="flex justify-between text-gray-600">
+              <p className="py-2 border-b border-gray-700">
+                <strong>Sender Email:</strong> {mail.email}
+              </p>
+              <h3 className="text-xl font-bold py-2">{mail.subject}</h3>
+              <p className="py-2">{mail.message}</p>
+              <div className="flex justify-between text-gray-400 text-sm">
                 <p>Sent At: {new Date(mail.sendAt).toLocaleString()}</p>
               </div>
-              <div className="text-right mt-4 p-3 bg-gray-200">
+              <div className="text-right mt-4">
                 <button
                   onClick={() => handleDelete(mail._id)}
-                  className="text-red-500 hover:text-red-700 transition duration-300"
+                  className="text-red-400 hover:text-red-600 transition duration-300"
                 >
                   <FaTrash />
                 </button>
@@ -68,6 +78,8 @@ const MailsPage = () => {
         </div>
       )}
     </div>
+    </div>
+    </>
   );
 };
 

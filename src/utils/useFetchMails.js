@@ -10,7 +10,7 @@ const useFetchMails = () => {
     const fetchMails = async () => {
       try {
         const response = await axios.get('/mails');
-        setMails(response.data);
+        setMails(response.data.data);
       } catch (error) {
         console.error('Failed to fetch mails:', error);
         setError(error.message);

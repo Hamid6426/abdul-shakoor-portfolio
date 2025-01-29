@@ -20,8 +20,8 @@ const MainNavbar = () => {
       : "hover:text-gray-500";
 
   return (
-    <nav className="bg-gray-100 text-black dark:text-white dark:bg-gray-950 text-white border-b border-b-2 border-gray-500">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <nav className="bg-gray-100 dark:text-white dark:bg-gray-950 text-white border-b-2 border-gray-500">
+      <div className="max-w-7xl mx-auto p-4 flex justify-between items-center">
         {/* Logo Section */}
         <div className="text-2xl font-bold text-gray-950">
           <a href="/" className="dark:text-white">

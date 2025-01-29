@@ -31,8 +31,8 @@ export default function PatchEmail() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded">
-      <label htmlFor="email" className="block text-gray-700">New Email</label>
+    <form onSubmit={handleSubmit} className="p-4 border rounded w-full">
+      <label htmlFor="email" className="block text-black dark:text-white">New Email</label>
       <input
         type="email"
         id="email"

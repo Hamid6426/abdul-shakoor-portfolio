@@ -25,8 +25,8 @@ export default function PatchPassword() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded">
-      <label htmlFor="currentPassword" className="block text-gray-700">Current Password</label>
+    <form onSubmit={handleSubmit} className="p-4 border rounded w-full">
+      <label htmlFor="currentPassword" className="block text-black dark:text-white">Current Password</label>
       <input
         type="password"
         id="currentPassword"
@@ -36,7 +36,7 @@ export default function PatchPassword() {
         required
       />
       
-      <label htmlFor="newPassword" className="block text-gray-700 mt-2">New Password</label>
+      <label htmlFor="newPassword" className="block text-black dark:text-white mt-2">New Password</label>
       <input
         type="password"
         id="newPassword"
