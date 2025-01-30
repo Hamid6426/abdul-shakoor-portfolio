@@ -1,13 +1,23 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import useFetchMails from "@/utils/useFetchMails";
 import axiosInstance from "@/utils/axiosConfig";
 import { FaTrash } from "react-icons/fa";
 import AdminNavbar from "@/components/navigation/AdminNavbar";
 
 const MailsPage = () => {
+  const router = useRouter();
   const { mails, loading: mailsLoading, error: mailError, setMails } = useFetchMails();
   const [error, setError] = useState(mailError);
-
+ 
+  useEffect(() => {
+    // Check for token in localStorage
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/login'); // Redirect to login page if token is not available
+    }
+  }, [router]);
+ 
   useEffect(() => {
     setError(mailError);
   }, [mailError]);
@@ -44,41 +54,41 @@ const MailsPage = () => {
 
   return (
     <>
-    <AdminNavbar/>
-    <div className="py-8 w-full">
-    <div className="container mx-auto p-4 max-w-xl min-h-screen bg-gray-900 text-gray-100">
-      <h1 className="text-4xl mb-8 font-bold text-center">All Mails</h1>
-      {filteredMails.length === 0 ? (
-        <p className="text-center text-gray-400">No mails found</p>
-      ) : (
-        <div className="space-y-4">
-          {filteredMails.map((mail) => (
-            <div key={mail.id} className="bg-gray-800 p-6 rounded-lg shadow-lg">
-              <h2 className="text-2xl font-bold pb-2 border-b border-gray-700">
-                {mail.firstName} {mail.lastName}
-              </h2>
-              <p className="py-2 border-b border-gray-700">
-                <strong>Sender Email:</strong> {mail.email}
-              </p>
-              <h3 className="text-xl font-bold py-2">{mail.subject}</h3>
-              <p className="py-2">{mail.message}</p>
-              <div className="flex justify-between text-gray-400 text-sm">
-                <p>Sent At: {new Date(mail.sendAt).toLocaleString()}</p>
-              </div>
-              <div className="text-right mt-4">
-                <button
-                  onClick={() => handleDelete(mail.id)} // Ensure correct mail ID reference
-                  className="text-red-400 hover:text-red-600 transition duration-300"
-                >
-                  <FaTrash />
-                </button>
-              </div>
+      <AdminNavbar />
+      <div className="py-8 w-full bg-gray-900">
+        <div className="mx-auto p-4 max-w-xl min-h-screen bg-gray-900 text-gray-100">
+          <h1 className="text-4xl mb-8 font-bold text-center">All Mails</h1>
+          {filteredMails.length === 0 ? (
+            <p className="text-center text-gray-400">No mails found</p>
+          ) : (
+            <div className="space-y-4">
+              {filteredMails.map((mail) => (
+                <div key={mail.id} className="bg-gray-800 p-6 rounded-lg shadow-lg">
+                  <h2 className="text-2xl font-bold pb-2 border-b border-gray-700">
+                    {mail.firstName} {mail.lastName}
+                  </h2>
+                  <p className="py-2 border-b border-gray-700">
+                    <strong>Sender Email:</strong> {mail.email}
+                  </p>
+                  <h3 className="text-xl font-bold py-2">{mail.subject}</h3>
+                  <p className="py-2">{mail.message}</p>
+                  <div className="flex justify-between text-gray-400 text-sm">
+                    <p>Sent At: {new Date(mail.send_at).toLocaleString()}</p>
+                  </div>
+                  <div className="text-right mt-4">
+                    <button
+                      onClick={() => handleDelete(mail.id)} // Ensure correct mail ID reference
+                      className="text-red-400 hover:text-red-600 transition duration-300"
+                    >
+                      <FaTrash />
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
-      )}
-    </div>
-    </div>
+      </div>
     </>
   );
 };

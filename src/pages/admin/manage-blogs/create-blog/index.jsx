@@ -2,14 +2,19 @@ import { useState } from "react";
 import axios from "@/utils/axiosConfig";
 import { useRouter } from "next/router";
 import AdminNavbar from "@/components/navigation/AdminNavbar";
+import dynamic from "next/dynamic";
+
+// Dynamically import React Quill to prevent SSR issues
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import "react-quill/dist/quill.snow.css"; // Import styles
 
 const CreateBlogPage = () => {
   const [formData, setFormData] = useState({
     title: "",
-    thumbnail: "",
+    thumbnail: "https://picsum.photos/id/26/800/450",
     excerpt: "",
     content: "",
-    author: "",
+    author: "Abdul Shakoor",
   });
   const router = useRouter();
 
@@ -20,7 +25,7 @@ const CreateBlogPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/blogs/create-blog", formData);
+      await axios.post("/blogs", formData);
       router.push("/admin/manage-blogs"); // Redirect to the blogs list page
     } catch (error) {
       console.warn("Failed to create blog:", error);
@@ -33,9 +38,9 @@ const CreateBlogPage = () => {
       <div className="container mx-auto p-4" style={{ maxWidth: "768px" }}>
         <h1 className="text-3xl mb-4">Create New Blog</h1>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+          <div className="mb-4 flex flex-col">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="text-white text-sm font-bold mb-2"
               htmlFor="title"
             >
               Title
@@ -46,13 +51,13 @@ const CreateBlogPage = () => {
               id="title"
               value={formData.title}
               onChange={handleChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="bg-gray-900 shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
               required
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-4 flex flex-col">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="text-white text-sm font-bold mb-2"
               htmlFor="thumbnail"
             >
               Thumbnail URL
@@ -63,13 +68,13 @@ const CreateBlogPage = () => {
               id="thumbnail"
               value={formData.thumbnail}
               onChange={handleChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="bg-gray-900 shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
               required
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-4 flex flex-col">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="text-white text-sm font-bold mb-2"
               htmlFor="excerpt"
             >
               Excerpt
@@ -77,31 +82,31 @@ const CreateBlogPage = () => {
             <textarea
               name="excerpt"
               id="excerpt"
+              rows={3}
               value={formData.excerpt}
               onChange={handleChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="bg-gray-900 shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
               required
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-4 flex flex-col">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="text-white text-sm font-bold mb-2"
               htmlFor="content"
             >
               Content
             </label>
-            <textarea
-              name="content"
-              id="content"
+            <ReactQuill
+              theme="snow"
               value={formData.content}
-              onChange={handleChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              onChange={(value) => setFormData({ ...formData, content: value })}
+              className="bg-gray-900 text-white"
               required
             />
           </div>
-          <div className="mb-4">
+          <div className="mb-4 flex flex-col">
             <label
-              className="block text-gray-700 text-sm font-bold mb-2"
+              className="text-white text-sm font-bold mb-2"
               htmlFor="author"
             >
               Author
@@ -112,7 +117,7 @@ const CreateBlogPage = () => {
               id="author"
               value={formData.author}
               onChange={handleChange}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="bg-gray-900 shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
               required
             />
           </div>

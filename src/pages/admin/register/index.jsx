@@ -35,13 +35,13 @@ const AdminRegisterPage = () => {
   
 
   return (
-    <div className="my-8 px-4 sm:px-6 lg:px-8">
+    <div className="py-8 px-4 sm:px-6 lg:px-8 bg-gray-900">
       <h1 className="text-4xl font-bold mb-6 text-center text-gray-900 dark:text-gray-100">
         Admin Sign Up
       </h1>
-      <form onSubmit={handleSubmit} className="max-w-2xl mx-auto mt-8 p-6 bg-white dark:bg-gray-800 shadow-xl rounded-lg">
+      <form onSubmit={handleSubmit} className="max-w-2xl mx-auto mt-8 p-6 bg-gray-800 dark:bg-gray-800 shadow-xl rounded-lg">
         <div className="mb-6">
-          <label htmlFor="fullName" className="block text-lg text-gray-700 dark:text-gray-300 mb-2">
+          <label htmlFor="fullName" className="text-white block text-lg dark:text-gray-300 mb-2">
             Full Name <span className="text-red-500">(required)</span>
           </label>
           <input
@@ -54,7 +54,7 @@ const AdminRegisterPage = () => {
           />
         </div>
         <div className="mb-6">
-          <label htmlFor="email" className="block text-lg text-gray-700 dark:text-gray-300 mb-2">
+          <label htmlFor="email" className="text-white block text-lg dark:text-gray-300 mb-2">
             Email <span className="text-red-500">(required)</span>
           </label>
           <input
@@ -67,7 +67,7 @@ const AdminRegisterPage = () => {
           />
         </div>
         <div className="mb-6">
-          <label htmlFor="password" className="block text-lg text-gray-700 dark:text-gray-300 mb-2">
+          <label htmlFor="password" className="text-white block text-lg dark:text-gray-300 mb-2">
             Password <span className="text-red-500">(required)</span>
           </label>
           <input

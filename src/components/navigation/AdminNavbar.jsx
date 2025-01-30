@@ -46,7 +46,7 @@ const AdminNavbar = () => {
   // Function to handle token removal
   const handleLogout = () => {
     localStorage.removeItem('token'); // Remove token from localStorage
-    window.location.href = '/dashboard/login'; // Redirect to login page (or any other page)
+    window.location.href = '/admin/login'; // Redirect to login page (or any other page)
   };
 
   return (

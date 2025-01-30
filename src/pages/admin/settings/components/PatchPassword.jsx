@@ -35,28 +35,28 @@ export default function PatchPassword() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded w-full">
-      <label htmlFor="currentPassword" className="block text-black dark:text-white">Current Password</label>
+    <form onSubmit={handleSubmit} className="p-4 border rounded w-full bg-gray-800">
+      <label htmlFor="currentPassword" className="block text-black dark:text-white text-white ">Current Password</label>
       <input
         type="password"
         id="currentPassword"
         value={currentPassword}
         onChange={(e) => setCurrentPassword(e.target.value)}
-        className="mt-1 p-2 w-full border rounded"
+        className="mt-1 p-2 w-full border rounded text-black dark:text-white"
         required
       />
       
-      <label htmlFor="newPassword" className="block text-black dark:text-white mt-2">New Password</label>
+      <label htmlFor="newPassword" className="block text-black dark:text-white mt-2 text-white ">New Password</label>
       <input
         type="password"
         id="newPassword"
         value={newPassword}
         onChange={(e) => setNewPassword(e.target.value)}
-        className="mt-1 p-2 w-full border rounded"
+        className="mt-1 p-2 w-full border rounded text-black dark:text-white"
         required
       />
 
-      <button type="submit" className="mt-2 p-2 bg-blue-500 text-white rounded">Update Password</button>
+      <button type="submit" className="mt-2 p-2 bg-blue-500 text-white rounded ">Update Password</button>
       
       {success && <p className="text-green-500 mt-2">{success}</p>}
       {error && <p className="text-red-500 mt-2">{error}</p>}

@@ -13,9 +13,9 @@ const BlogsPage = () => {
 
   useEffect(() => {
     // Check for token in localStorage
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (!token) {
-      router.push('/login'); // Redirect to login page if token is not available
+      router.push("/login"); // Redirect to login page if token is not available
     }
   }, [router]);
 
@@ -38,41 +38,41 @@ const BlogsPage = () => {
   const filteredBlogs = Array.isArray(blogs) ? blogs : [];
 
   return (
-    <>
+    <div className="w-full text-white bg-gray-900">
       <AdminNavbar />
-      <div className="container mx-auto py-8" style={{ maxWidth: "768px" }}>
-        <h1 className="text-3xl mb-4">All Blogs</h1>
+      <div className="bg-gray-900 w-full mx-auto py-8" style={{ maxWidth: "768px" }}>
+        <h1 className="text-4xl font-bold mb-6">All Blogs</h1>
         <div className="mb-8">
           <BlogCreateButton />
         </div>
         {filteredBlogs.length === 0 ? (
-          <p className="text-center">No blogs found</p>
+          <p className="text-center text-lg font-medium">No blogs found</p>
         ) : (
-          <div className="grid gap-4 grid-cols-1">
+          <div className="grid gap-6 grid-cols-1 sm:grid-cols-2">
             {filteredBlogs.map((blog) => (
               <div
                 key={blog._id}
-                className="bg-white border-gray-300 border-2 p-4 rounded-lg relative"
+                className="bg-gray-800 border-gray-300 border-2 p-6 rounded-lg relative"
               >
-                <h2 className="text-lg font-bold pb-3 border-b-2">
-                  {blog.title}
-                </h2>
+                <h2 className="text-2xl font-semibold pb-3">{blog.title}</h2>
                 <img
                   src={blog.thumbnail}
                   alt={blog.title}
-                  className="w-full h-auto pb-3"
+                  className="w-full h-auto pb-3 rounded"
                 />
-                <p className="py-3 border-b-2">
-                  <strong>Author:</strong> {blog.author}
+            
+                <h3 className="py-2">{blog.excerpt.substring(0, 100)}...</h3>
+                <hr/>
+
+                <p className="py-3">{blog.content.substring(0, 100)}...</p>
+                <p className="py-3">
+                  <span className="font-bold">Author:</span> {blog.author}
                 </p>
-                <h3 className="text-lg font-bold p-3 bg-gray-200">
-                  {blog.excerpt}
-                </h3>
-                <p className="py-3">{blog.content}</p>
-                <div className="flex justify-between text-gray-600">
-                  <p>Created At: {new Date(blog.createdAt).toLocaleString()}</p>
+                <hr/>
+                <div className="flex justify-between text-gray-500 py-3">
+                  <p className="text-sm">Created At: {new Date(blog.created_at).toLocaleString()}</p>
                 </div>
-                <div className="flex flex-row gap-4 w-full justify-end">
+                <div className="flex flex-row gap-4 w-full justify-end mt-4">
                   <BlogDeleteButton
                     blogId={blog._id}
                     onDeleteSuccess={() =>
@@ -81,15 +81,14 @@ const BlogsPage = () => {
                       )
                     }
                   />
-                  <BlogUpdateButton slug={blog.slug} />{" "}
-                  {/* Updated prop name */}
+                  <BlogUpdateButton slug={blog.slug} />
                 </div>
               </div>
             ))}
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

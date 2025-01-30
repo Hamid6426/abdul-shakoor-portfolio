@@ -57,15 +57,15 @@ export default function PatchFullName() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded w-full">
-      <label htmlFor="fullName" className="block text-black dark:text-white">Full Name</label>
+    <form onSubmit={handleSubmit} className="p-4 border rounded w-full bg-gray-800">
+      <label htmlFor="fullName" className="block text-black dark:text-white text-white ">Full Name</label>
       <input
         type="text"
         id="fullName"
         name="fullName"
         value={fullName}
         onChange={handleChange}
-        className="mt-1 p-2 w-full border rounded"
+        className="mt-1 p-2 w-full border rounded text-black dark:text-white"
         required
       />
       <button type="submit" className="mt-2 p-2 bg-blue-500 text-white rounded">Update Full Name</button>
