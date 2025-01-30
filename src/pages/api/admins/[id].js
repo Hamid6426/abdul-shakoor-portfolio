@@ -19,9 +19,7 @@ export default async function handler(req, res) {
     switch (req.method) {
       case "GET":
         try {
-          await adminRepo.connect();
           const admin = await adminRepo.getAdmin(id);
-          await adminRepo.disconnect();
 
           if (admin) {
             return res.status(200).json(admin);
@@ -29,7 +27,7 @@ export default async function handler(req, res) {
             return res.status(404).json({ error: "Admin not found" });
           }
         } catch (error) {
-          console.error("Error retrieving admin:", error);
+          console.error("Error retrieving admin:", error); // Add error logging
           return res.status(500).json({ error: "Error retrieving admin" });
         }
 
@@ -41,13 +39,11 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: "Missing admin data" });
           }
 
-          await adminRepo.connect();
           const updatedAdmin = await adminRepo.updateAdmin(id, adminData);
-          await adminRepo.disconnect();
 
           return res.status(200).json(updatedAdmin);
         } catch (error) {
-          console.error("Error updating admin:", error);
+          console.error("Error updating admin:", error); // Add error logging
           return res.status(500).json({ error: "Error updating admin" });
         }
 
@@ -55,9 +51,7 @@ export default async function handler(req, res) {
         try {
           const { password, ...updateData } = req.body; // Ensure password is not updated
 
-          await adminRepo.connect();
           const admin = await adminRepo.patchAdmin(id, updateData);
-          await adminRepo.disconnect();
 
           if (!admin) {
             return res.status(404).json({ message: "Admin not found" });
@@ -65,21 +59,17 @@ export default async function handler(req, res) {
 
           return res.status(200).json({ success: true, data: admin });
         } catch (error) {
-          console.error("PATCH error:", error);
-          return res
-            .status(500)
-            .json({ message: "Server error", error: error.message });
+          console.error("PATCH error:", error); // Add error logging
+          return res.status(500).json({ message: "Server error", error: error.message });
         }
 
       case "DELETE":
         try {
-          await adminRepo.connect();
           await adminRepo.deleteAdmin(id);
-          await adminRepo.disconnect();
 
           return res.status(204).json({});
         } catch (error) {
-          console.error("Error deleting admin:", error);
+          console.error("Error deleting admin:", error); // Add error logging
           return res.status(500).json({ error: "Error deleting admin" });
         }
 

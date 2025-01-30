@@ -5,6 +5,7 @@ import cors from "@/lib/middlewares/cors";
 const mailRepo = new MailRepository();
 
 export default async function handler(req, res) {
+  await cors(req, res);
   const { id } = req.query;
 
   if (!id) {
@@ -15,15 +16,10 @@ export default async function handler(req, res) {
   }
 
   await authMiddleware(req, res, async () => {
-    await cors(req, res);
-    
     switch (req.method) {
       case 'GET':
         try {
-          await mailRepo.connect();
           const mail = await mailRepo.getMail(id);
-          await mailRepo.disconnect();
-
           return res.status(200).json({
             success: true,
             data: mail,
@@ -38,10 +34,7 @@ export default async function handler(req, res) {
 
       case 'DELETE':
         try {
-          await mailRepo.connect();
           await mailRepo.deleteMail(id);
-          await mailRepo.disconnect();
-
           return res.status(200).json({
             success: true,
             message: 'Mail entry deleted successfully'

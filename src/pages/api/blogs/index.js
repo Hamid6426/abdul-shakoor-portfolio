@@ -10,9 +10,7 @@ export default async function handler(req, res) {
   switch (req.method) {
     case 'GET':
       try {
-        await blogRepo.connect();
         const blogs = await blogRepo.getAllBlogs();
-        await blogRepo.disconnect();
         return res.status(200).json({
           success: true,
           data: blogs,
@@ -42,7 +40,6 @@ export default async function handler(req, res) {
           const sanitizedContent = content.replace(/[^a-zA-Z0-9 .,!?'"-]/g, '');
           const sanitizedAuthor = author.replace(/[^a-zA-Z0-9 ]/g, '');
 
-          await blogRepo.connect();
           await blogRepo.createBlog({
             title: sanitizedTitle,
             thumbnail: sanitizedThumbnail,
@@ -50,7 +47,6 @@ export default async function handler(req, res) {
             content: sanitizedContent,
             author: sanitizedAuthor,
           });
-          await blogRepo.disconnect();
 
           return res.status(201).json({
             success: true,

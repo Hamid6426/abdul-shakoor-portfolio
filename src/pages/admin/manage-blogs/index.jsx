@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import useFetchBlogs from "@/utils/useFetchBlogs";
 import BlogDeleteButton from "@/components/buttons/BlogDeleteButton";
 import BlogUpdateButton from "@/components/buttons/BlogUpdateButton";
@@ -6,8 +7,17 @@ import BlogCreateButton from "@/components/buttons/BlogCreateButton";
 import AdminNavbar from "@/components/navigation/AdminNavbar";
 
 const BlogsPage = () => {
+  const router = useRouter();
   const { blogs, loading, error: fetchError, setBlogs } = useFetchBlogs();
   const [error, setError] = useState(fetchError);
+
+  useEffect(() => {
+    // Check for token in localStorage
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/login'); // Redirect to login page if token is not available
+    }
+  }, [router]);
 
   useEffect(() => {
     setError(fetchError);

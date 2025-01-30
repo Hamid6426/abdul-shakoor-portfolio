@@ -6,14 +6,11 @@ const mailRepo = new MailRepository();
 
 export default async function handler(req, res) {
   await cors(req, res);
-
   switch (req.method) {
     case "GET":
       await authMiddleware(req, res, async () => {
         try {
-          await mailRepo.connect();
           const mails = await mailRepo.getAllMails();
-          await mailRepo.disconnect();
           return res.status(200).json({
             success: true,
             data: mails,
@@ -48,7 +45,6 @@ export default async function handler(req, res) {
         const sanitizedLastName = lastName.replace(/[^a-zA-Z0-9 ]/g, "");
         const sanitizedMessage = message.replace(/[^a-zA-Z0-9 .,!?'"]/g, "");
 
-        await mailRepo.connect();
         await mailRepo.createMail({
           firstName: sanitizedFirstName,
           lastName: sanitizedLastName,
@@ -56,7 +52,6 @@ export default async function handler(req, res) {
           subject,
           message: sanitizedMessage,
         });
-        await mailRepo.disconnect();
 
         return res.status(201).json({
           success: true,

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import useFetchMails from "@/utils/useFetchMails";
-import axios from "@/utils/axiosConfig";
+import axiosInstance from "@/utils/axiosConfig";
 import { FaTrash } from "react-icons/fa";
 import AdminNavbar from "@/components/navigation/AdminNavbar";
 
@@ -18,10 +18,10 @@ const MailsPage = () => {
 
   const handleDelete = async (id) => {
     try {
-      const res = await axios.delete(`/mails/${id}`);
+      const res = await axiosInstance.delete(`/mails/${id}`);
       if (res.status === 200) {
         // Remove the deleted mail from the state to reflect the change
-        setMails((prevMails) => prevMails.filter((mail) => mail._id !== id));
+        setMails((prevMails) => prevMails.filter((mail) => mail.id !== id)); // Ensure correct mail ID reference
       }
     } catch (error) {
       setError(error.message);
@@ -53,7 +53,7 @@ const MailsPage = () => {
       ) : (
         <div className="space-y-4">
           {filteredMails.map((mail) => (
-            <div key={mail._id} className="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <div key={mail.id} className="bg-gray-800 p-6 rounded-lg shadow-lg">
               <h2 className="text-2xl font-bold pb-2 border-b border-gray-700">
                 {mail.firstName} {mail.lastName}
               </h2>
@@ -67,7 +67,7 @@ const MailsPage = () => {
               </div>
               <div className="text-right mt-4">
                 <button
-                  onClick={() => handleDelete(mail._id)}
+                  onClick={() => handleDelete(mail.id)} // Ensure correct mail ID reference
                   className="text-red-400 hover:text-red-600 transition duration-300"
                 >
                   <FaTrash />

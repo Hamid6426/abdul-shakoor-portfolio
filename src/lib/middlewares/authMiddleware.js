@@ -1,6 +1,12 @@
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
 
 const authMiddleware = (req, res, next) => {
+  console.log('Authorization Header:', req.headers.authorization);
+
   const token = req.headers.authorization?.split(' ')[1]; // Extract token from Authorization header
 
   if (!token) {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from '@/utils/axiosConfig';
+import axiosInstance from '@/utils/axiosConfig'; // Import the axios instance
 
 const useFetchMails = () => {
   const [mails, setMails] = useState([]);
@@ -9,11 +9,15 @@ const useFetchMails = () => {
   useEffect(() => {
     const fetchMails = async () => {
       try {
-        const response = await axios.get('/mails');
-        setMails(response.data.data);
+        const response = await axiosInstance.get('/mails');
+        if (response.status === 200 && response.data.success) {
+          setMails(response.data.data);
+        } else {
+          setError(response.data.message || 'An error occurred while fetching mails.');
+        }
       } catch (error) {
         console.error('Failed to fetch mails:', error);
-        setError(error.message);
+        setError(error.message || 'An error occurred while fetching mails.');
       } finally {
         setLoading(false);
       }

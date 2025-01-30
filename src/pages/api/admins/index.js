@@ -17,6 +17,7 @@ export default async function handler(req, res) {
             return res.status(404).json({ error: "No admins created yet" });
           }
         } catch (error) {
+          console.error("Error retrieving admins:", error); // Add error logging
           return res.status(500).json({ error: "Error retrieving admins" });
         }
       default:

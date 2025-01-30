@@ -1,10 +1,19 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { patchAdminPassword } from '@/utils/patchAdmin';
+import axiosInstance from '@/utils/axiosConfig'; // Import your axios instance if you have one
+
+// Define or import the AdminPassword function
+const AdminPassword = async (id, currentPassword, newPassword) => {
+  const response = await axiosInstance.patch(`/admins/${id}`, {
+    currentPassword,
+    newPassword
+  });
+  return response.data;
+};
 
 export default function PatchPassword() {
   const router = useRouter();
-  const { id } = router.query;
+  const { id } = router.query; // Get admin ID from URL
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [error, setError] = useState('');
@@ -16,11 +25,12 @@ export default function PatchPassword() {
     setSuccess('');
 
     try {
-      await patchAdminPassword(id, currentPassword, newPassword);
+      await AdminPassword(id, currentPassword, newPassword);
       setSuccess('Password updated successfully!');
-      setTimeout(() => router.push('/admin/dashboard'), 1500);
+      setTimeout(() => router.push('/admin/dashboard'), 1500); // Redirect after success
     } catch (err) {
-      setError(err.message);
+      console.error('Error updating password:', err);
+      setError(err.response?.data?.error || 'An error occurred while updating the password.');
     }
   };
 

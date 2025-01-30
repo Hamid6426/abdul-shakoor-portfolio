@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "@/utils/axiosConfig";
+import axiosInstance from "@/utils/axiosConfig";
 import { useRouter } from "next/router";
 
 const AdminLoginPage = () => {
@@ -7,36 +7,40 @@ const AdminLoginPage = () => {
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false); // for loading state
+  const [errorMessage, setErrorMessage] = useState(''); // to show error messages
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    setErrorMessage('');
+    setIsLoading(true); // disable submit button
+    setErrorMessage(''); // reset error messages
 
     try {
-      const response = await axios.post('/auth/login', { email, password });
+      const loginData = { email, password };
+      const response = await axiosInstance.post('/admins/login', loginData);
 
-      if (response.data.success) {
-        // Store token in localStorage or cookie
-        localStorage.setItem('token', response.data.token);
-        router.push("/admin/dashboard");
+      const data = response.data;
+
+      if (data.admin) {
+        // Save the token to localStorage
+        localStorage.setItem('token', data.token);
+        console.log('Token saved to localStorage:', data.token);
+        router.push("/admin/dashboard"); // redirect to dashboard
       } else {
-        setErrorMessage(response.data.error || "Invalid credentials");
+        setErrorMessage(data.error || "Something went wrong.");
       }
     } catch (error) {
       console.error("Login error:", error);
-      setErrorMessage(error.response?.data?.error || "Login failed.");
+      setErrorMessage(error.response?.data?.error || "Login failed. Please try again.");
     } finally {
-      setIsLoading(false);
+      setIsLoading(false); // re-enable button after request
     }
   };
 
   return (
     <div className="my-8 px-4 sm:px-6 lg:px-8">
       <h1 className="text-4xl font-bold mb-6 text-center text-gray-900 dark:text-gray-100">
-        Admin Sign In
+        Admin Login
       </h1>
       <form onSubmit={handleSubmit} className="max-w-2xl mx-auto mt-8 p-6 bg-white dark:bg-gray-800 shadow-xl rounded-lg">
         <div className="mb-6">
@@ -65,11 +69,15 @@ const AdminLoginPage = () => {
             required
           />
         </div>
+
+        {errorMessage && <div className="text-red-500 text-center mb-4">{errorMessage}</div>}
+        
         <button
           type="submit"
           className="w-full py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-400 transition duration-200"
+          disabled={isLoading} // disable while loading
         >
-          Sign In
+          {isLoading ? "Logging In..." : "Log In"}
         </button>
       </form>
       <div className="mt-4 text-center">

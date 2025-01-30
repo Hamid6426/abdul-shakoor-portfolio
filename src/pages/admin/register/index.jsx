@@ -18,12 +18,12 @@ const AdminRegisterPage = () => {
 
     try {
       const adminData = { fullName, email, password };
-      const response = await axios.post('/auth/register', adminData);
-      
-      if (response.data.success) {
-        router.push("/admin/login"); // redirect to dashboard
+      const response = await axios.post('/admins/register', adminData);
+
+      if (response.data.admin) {
+        router.push("/admin/login"); // redirect to login
       } else {
-        setErrorMessage(response.data.message || "Something went wrong.");
+        setErrorMessage(response.data.error || "Something went wrong.");
       }
     } catch (error) {
       console.error("Signup error:", error);
@@ -31,7 +31,8 @@ const AdminRegisterPage = () => {
     } finally {
       setIsLoading(false); // re-enable button after request
     }
-  };
+  }
+  
 
   return (
     <div className="my-8 px-4 sm:px-6 lg:px-8">
@@ -78,7 +79,9 @@ const AdminRegisterPage = () => {
             required
           />
         </div>
+
         {errorMessage && <div className="text-red-500 text-center mb-4">{errorMessage}</div>}
+
         <button
           type="submit"
           className="w-full py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-400 transition duration-200"

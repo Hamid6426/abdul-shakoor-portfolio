@@ -10,9 +10,7 @@ export default async function handler(req, res) {
   switch (req.method) {
     case 'GET':
       try {
-        await blogRepo.connect();
         const blog = await blogRepo.getBlogBySlug(slug);
-        await blogRepo.disconnect();
 
         if (!blog) {
           return res.status(404).json({ error: "Blog not found" });
@@ -26,9 +24,7 @@ export default async function handler(req, res) {
 
     case 'PUT':
       try {
-        await blogRepo.connect();
         const updatedBlog = await blogRepo.updateBlogBySlug(slug, req.body);
-        await blogRepo.disconnect();
 
         if (!updatedBlog) {
           return res.status(404).json({ error: "Blog not found" });

@@ -18,10 +18,7 @@ export default async function handler(req, res) {
   switch (req.method) {
     case 'GET':
       try {
-        await blogRepo.connect();
         const blog = await blogRepo.getBlog(id);
-        await blogRepo.disconnect();
-
         return res.status(200).json({
           success: true,
           data: blog,
@@ -48,12 +45,10 @@ export default async function handler(req, res) {
           const sanitizedTitle = title.replace(/[^a-zA-Z0-9 ]/g, '');
           const sanitizedContent = content.replace(/[^a-zA-Z0-9 .,!?'"-]/g, '');
 
-          await blogRepo.connect();
-          const updatedBlog = await blogRepo.updateBlog(id, {
+          const updatedBlog = await blogRepo.updateBlogById(id, {
             title: sanitizedTitle,
             content: sanitizedContent,
           });
-          await blogRepo.disconnect();
 
           return res.status(200).json({
             success: true,
@@ -72,10 +67,7 @@ export default async function handler(req, res) {
     case 'DELETE':
       await authMiddleware(req, res, async () => {
         try {
-          await blogRepo.connect();
           await blogRepo.deleteBlog(id);
-          await blogRepo.disconnect();
-
           return res.status(200).json({
             success: true,
             message: 'Blog entry deleted successfully'
