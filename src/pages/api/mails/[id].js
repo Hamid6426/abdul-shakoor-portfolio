@@ -1,6 +1,8 @@
-import { getMailById, getMailByIdAndDelete } from "@/lib/services/mailService";
+import MailRepository from '@/lib/repositories/mailRepository';
 import authMiddleware from "@/lib/middlewares/authMiddleware";
 import cors from "@/lib/middlewares/cors";
+
+const mailRepo = new MailRepository();
 
 export default async function handler(req, res) {
   const { id } = req.query;
@@ -14,35 +16,44 @@ export default async function handler(req, res) {
 
   await authMiddleware(req, res, async () => {
     await cors(req, res);
+    
     switch (req.method) {
       case 'GET':
         try {
-          const mail = await getMailById(id); // Pass the id to getMailById function
+          await mailRepo.connect();
+          const mail = await mailRepo.getMail(id);
+          await mailRepo.disconnect();
+
           return res.status(200).json({
             success: true,
             data: mail,
           });
         } catch (error) {
-          console.error('Error fetching mail:', error); // Log the error for debugging
+          console.error('Error fetching mail:', error);
           return res.status(500).json({
             success: false,
-            message: error.message, // Return the actual error message
+            message: error.message,
           });
         }
+
       case 'DELETE':
         try {
-          const deletedMail = await getMailByIdAndDelete(id);
+          await mailRepo.connect();
+          await mailRepo.deleteMail(id);
+          await mailRepo.disconnect();
+
           return res.status(200).json({
             success: true,
-            data: deletedMail,
+            message: 'Mail entry deleted successfully'
           });
         } catch (error) {
-          console.error('Error deleting mail:', error); // Log the error for debugging
+          console.error('Error deleting mail:', error);
           return res.status(500).json({
             success: false,
-            message: error.message, // Return the actual error message
+            message: error.message,
           });
         }
+
       default:
         res.setHeader('Allow', ['GET', 'DELETE']);
         return res.status(405).end(`Method ${req.method} Not Allowed`);

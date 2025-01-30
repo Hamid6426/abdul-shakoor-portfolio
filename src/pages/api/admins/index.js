@@ -1,6 +1,8 @@
-import { getAllAdmins } from '@/lib/services/adminService';
+import AdminRepository from '@/lib/repositories/adminRepository';
 import authMiddleware from "@/lib/middlewares/authMiddleware";
 import cors from "@/lib/middlewares/cors";
+
+const adminRepo = new AdminRepository();
 
 export default async function handler(req, res) {
   await cors(req, res);
@@ -8,7 +10,7 @@ export default async function handler(req, res) {
     switch (req.method) {
       case 'GET':
         try {
-          const admins = await getAllAdmins();
+          const admins = await adminRepo.getAllAdmins();
           if (admins.length > 0) {
             return res.status(200).json(admins);
           } else {

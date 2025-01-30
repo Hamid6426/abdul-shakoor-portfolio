@@ -1,6 +1,8 @@
-import { getBlogById, getBlogByIdAndUpdate, getBlogByIdAndDelete } from "@/lib/services/blogService";
+import BlogRepository from '@/lib/repositories/blogRepository';
 import authMiddleware from "@/lib/middlewares/authMiddleware";
 import cors from "@/lib/middlewares/cors";
+
+const blogRepo = new BlogRepository();
 
 export default async function handler(req, res) {
   await cors(req, res);
@@ -16,18 +18,22 @@ export default async function handler(req, res) {
   switch (req.method) {
     case 'GET':
       try {
-        const blog = await getBlogById(id); // Pass the id to getBlogById function
+        await blogRepo.connect();
+        const blog = await blogRepo.getBlog(id);
+        await blogRepo.disconnect();
+
         return res.status(200).json({
           success: true,
           data: blog,
         });
       } catch (error) {
-        console.error('Error fetching blog:', error); // Log the error for debugging
+        console.error('Error fetching blog:', error);
         return res.status(500).json({
           success: false,
-          message: error.message, // Return the actual error message
+          message: error.message,
         });
       }
+
     case 'PUT': // Update handler
       await authMiddleware(req, res, async () => {
         try {
@@ -42,41 +48,48 @@ export default async function handler(req, res) {
           const sanitizedTitle = title.replace(/[^a-zA-Z0-9 ]/g, '');
           const sanitizedContent = content.replace(/[^a-zA-Z0-9 .,!?'"-]/g, '');
 
-          const updatedBlog = await getBlogByIdAndUpdate(id, {
+          await blogRepo.connect();
+          const updatedBlog = await blogRepo.updateBlog(id, {
             title: sanitizedTitle,
             content: sanitizedContent,
           });
+          await blogRepo.disconnect();
 
           return res.status(200).json({
             success: true,
             data: updatedBlog,
           });
         } catch (error) {
-          console.error('Error updating blog:', error); // Log the error for debugging
+          console.error('Error updating blog:', error);
           return res.status(500).json({
             success: false,
             message: error.message,
           });
         }
       });
-      break; // Ensure the PUT case does not fall through
+      break;
+
     case 'DELETE':
       await authMiddleware(req, res, async () => {
         try {
-          const deletedBlog = await getBlogByIdAndDelete(id);
+          await blogRepo.connect();
+          await blogRepo.deleteBlog(id);
+          await blogRepo.disconnect();
+
           return res.status(200).json({
             success: true,
-            data: deletedBlog,
+            message: 'Blog entry deleted successfully'
           });
         } catch (error) {
-          console.error('Error deleting blog:', error); // Log the error for debugging
+          console.error('Error deleting blog:', error);
           return res.status(500).json({
             success: false,
             message: error.message,
           });
         }
       });
-      break; // Ensure the DELETE case does not fall through
+      break;
+
     default:
       res.setHeader('Allow', ['GET', 'PUT', 'DELETE']);
       return res.status(405).end(`Method ${req.method} Not Allowed`);

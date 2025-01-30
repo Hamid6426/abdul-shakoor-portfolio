@@ -1,24 +1,30 @@
-import { createBlog, getAllBlogs } from "@/lib/services/blogService";
+import BlogRepository from '@/lib/repositories/blogRepository';
 import authMiddleware from "@/lib/middlewares/authMiddleware";
 import cors from "@/lib/middlewares/cors";
 
+const blogRepo = new BlogRepository();
+
 export default async function handler(req, res) {
   await cors(req, res);
+
   switch (req.method) {
     case 'GET':
       try {
-        const blogs = await getAllBlogs();
+        await blogRepo.connect();
+        const blogs = await blogRepo.getAllBlogs();
+        await blogRepo.disconnect();
         return res.status(200).json({
           success: true,
           data: blogs,
         });
       } catch (error) {
-        console.error('Failed to get all blogs:', error); // Log the error for debugging
+        console.error('Failed to get all blogs:', error);
         return res.status(500).json({
           success: false,
-          message: error.message, // Return the actual error message
+          message: error.message,
         });
       }
+
     case 'POST':
       await authMiddleware(req, res, async () => {
         try {
@@ -36,22 +42,27 @@ export default async function handler(req, res) {
           const sanitizedContent = content.replace(/[^a-zA-Z0-9 .,!?'"-]/g, '');
           const sanitizedAuthor = author.replace(/[^a-zA-Z0-9 ]/g, '');
 
-          // Creating blog
-          const blog = await createBlog({
+          await blogRepo.connect();
+          await blogRepo.createBlog({
             title: sanitizedTitle,
             thumbnail: sanitizedThumbnail,
             excerpt: sanitizedExcerpt,
             content: sanitizedContent,
             author: sanitizedAuthor,
           });
+          await blogRepo.disconnect();
 
-          return res.status(201).json(blog);
+          return res.status(201).json({
+            success: true,
+            message: 'Blog entry created successfully'
+          });
         } catch (error) {
-          console.log('Blog creation error:', error); // Logging the error for debugging
+          console.log('Blog creation error:', error);
           return res.status(500).json({ error: error.message });
         }
       });
-      break; // Ensure the POST case does not fall through
+      break;
+
     default:
       res.setHeader('Allow', ['GET', 'POST']);
       return res.status(405).end(`Method ${req.method} Not Allowed`);

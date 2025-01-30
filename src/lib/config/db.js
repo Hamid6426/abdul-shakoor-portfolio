@@ -1,9 +1,9 @@
-import mongoose from 'mongoose';
+import { Pool } from '@vercel/postgres';
 
-let cached = global.mongoose;
+let cached = global.pgPool;
 
 if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null, timeout: null };
+  cached = global.pgPool = { conn: null, promise: null, timeout: null };
 }
 
 const connectDB = async () => {
@@ -17,11 +17,12 @@ const connectDB = async () => {
   }
 
   if (!cached.promise) {
-    cached.promise = mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }).then((mongoose) => {
-      return mongoose;
+    cached.promise = new Pool({
+      connectionString: process.env.NEON_DATABASE_URL,
+      max: 10, // max number of clients in the pool
+      idleTimeoutMillis: 10000 // close idle clients after 30 seconds
+    }).connect().then((pool) => {
+      return pool;
     });
   }
 
@@ -32,7 +33,7 @@ const connectDB = async () => {
 const disconnectDB = async (delay = 10000) => {
   if (cached.conn) {
     cached.timeout = setTimeout(async () => {
-      await mongoose.connection.close();
+      await cached.conn.end();
       cached.conn = null;
       cached.promise = null;
       console.log('Database connection closed after delay');

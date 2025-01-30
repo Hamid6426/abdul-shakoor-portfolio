@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { patchAdmin } from '@/lib/services/patchAdmin';
+import { patchAdmin } from '@/utils/patchAdmin';
 import { getAdmin } from '@/lib/services/getAdmin';
 
 export default function PatchFullName() {

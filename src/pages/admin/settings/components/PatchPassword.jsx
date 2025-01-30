@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { patchAdminPassword } from '@/lib/services/patchAdmin';
+import { patchAdminPassword } from '@/utils/patchAdmin';
 
 export default function PatchPassword() {
   const router = useRouter();

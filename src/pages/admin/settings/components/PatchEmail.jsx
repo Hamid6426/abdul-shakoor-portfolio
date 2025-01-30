@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { patchAdmin } from '@/lib/services/patchAdmin';
+import { patchAdmin } from '@/utils/patchAdmin';
 
 export default function PatchEmail() {
   const router = useRouter();
