@@ -27,19 +27,19 @@ axiosInstance.interceptors.request.use(
 );
 
 // Add a response interceptor
-axiosInstance.interceptors.response.use(
-  (response) => {
-    console.log('Response:', response); // Log response
-    return response;
-  },
-  (error) => {
-    console.error('Response Interceptor Error:', error); // Log response interceptor error
-    if (error.response && error.response.data && error.response.data.redirectTo) {
-      console.log('Redirecting to:', error.response.data.redirectTo); // Log redirection
-      window.location.href = error.response.data.redirectTo;
-    }
-    return Promise.reject(error);
-  }
-);
+// axiosInstance.interceptors.response.use(
+//   (response) => {
+//     console.log('Response:', response); // Log response
+//     return response;
+//   },
+//   (error) => {
+//     console.error('Response Interceptor Error:', error); // Log response interceptor error
+//     if (error.response && error.response.data && error.response.data.redirectTo) {
+//       console.log('Redirecting to:', error.response.data.redirectTo); // Log redirection
+//       window.location.href = error.response.data.redirectTo;
+//     }
+//     return Promise.reject(error);
+//   }
+// );
 
 export default axiosInstance;
