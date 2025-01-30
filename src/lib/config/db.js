@@ -1,44 +1,25 @@
-import { Pool } from '@vercel/postgres';
+// const { neon } = require("@neondatabase/serverless");
 
-let cached = global.pgPool;
+// if (!process.env.NEON_DATABASE_URL) {
+//   throw new Error("❌ NEON_DATABASE_URL is missing! Check your .env.local file.");
+// }
 
-if (!cached) {
-  cached = global.pgPool = { conn: null, promise: null, timeout: null };
+// const connectDB = () => neon(process.env.NEON_DATABASE_URL);
+
+// module.exports = connectDB;
+
+// The DB script require dotenv because the next is not running
+
+require("dotenv").config(); // Load environment variables
+
+const { neon } = require("@neondatabase/serverless");
+
+const NEON_DATABASE_URL = process.env.NEON_DATABASE_URL;
+
+if (!NEON_DATABASE_URL) {
+  throw new Error("❌ No database connection string found! Check your .env file.");
 }
 
-const connectDB = async () => {
-  if (cached.conn) {
-    // Clear any scheduled disconnection
-    if (cached.timeout) {
-      clearTimeout(cached.timeout);
-      cached.timeout = null;
-    }
-    return cached.conn;
-  }
+const connectDB = () => neon(NEON_DATABASE_URL);
 
-  if (!cached.promise) {
-    cached.promise = new Pool({
-      connectionString: process.env.NEON_DATABASE_URL,
-      max: 10, // max number of clients in the pool
-      idleTimeoutMillis: 10000 // close idle clients after 30 seconds
-    }).connect().then((pool) => {
-      return pool;
-    });
-  }
-
-  cached.conn = await cached.promise;
-  return cached.conn;
-};
-
-const disconnectDB = async (delay = 10000) => {
-  if (cached.conn) {
-    cached.timeout = setTimeout(async () => {
-      await cached.conn.end();
-      cached.conn = null;
-      cached.promise = null;
-      console.log('Database connection closed after delay');
-    }, delay);
-  }
-};
-
-export { connectDB, disconnectDB };
+module.exports = connectDB;

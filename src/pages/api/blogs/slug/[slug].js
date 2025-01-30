@@ -1,4 +1,4 @@
-import BlogRepository from '@/lib/repositories/blogRepository';
+import BlogRepository from '@/lib/repositories/BlogRepository';
 import cors from "@/lib/middlewares/cors";
 
 const blogRepo = new BlogRepository();

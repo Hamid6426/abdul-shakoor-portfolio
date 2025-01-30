@@ -1,4 +1,4 @@
-import AdminRepository from '@/lib/repositories/adminRepository';
+import AdminRepository from '@/lib/repositories/AdminRepository';
 import cors from "@/lib/middlewares/cors";
 import jwt from 'jsonwebtoken';  // Import jwt here
 

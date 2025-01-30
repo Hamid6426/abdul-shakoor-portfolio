@@ -1,4 +1,4 @@
-import AdminRepository from "@/lib/repositories/adminRepository";
+import AdminRepository from "@/lib/repositories/AdminRepository";
 import authMiddleware from "@/lib/middlewares/authMiddleware";
 import cors from "@/lib/middlewares/cors";
 

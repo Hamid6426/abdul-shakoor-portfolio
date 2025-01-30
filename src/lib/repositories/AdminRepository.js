@@ -1,17 +1,9 @@
-import { Client } from '@vercel/postgres';
+import connectDB from '@/lib/config/db';
 import bcrypt from 'bcrypt';
 
 class AdminRepository {
   constructor() {
-    this.client = new Client();
-  }
-
-  async connect() {
-    await this.client.connect();
-  }
-
-  async disconnect() {
-    await this.client.end();
+    this.db = connectDB;
   }
 
   async registerAdmin(adminData) {

@@ -1,4 +1,4 @@
-import BlogRepository from '@/lib/repositories/blogRepository';
+import BlogRepository from '@/lib/repositories/BlogRepository';
 import authMiddleware from "@/lib/middlewares/authMiddleware";
 import cors from "@/lib/middlewares/cors";
 

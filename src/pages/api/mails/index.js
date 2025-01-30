@@ -1,4 +1,4 @@
-import MailRepository from '@/lib/repositories/mailRepository';
+import MailRepository from "@/lib/repositories/MailRepository";
 import authMiddleware from "@/lib/middlewares/authMiddleware";
 import cors from "@/lib/middlewares/cors";
 
