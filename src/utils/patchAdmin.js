@@ -6,7 +6,7 @@ export const patchAdmin = async (id, updateData) => {
       throw new Error('Invalid data: Admin ID and update fields are required');
     }
 
-    const response = await axios.patch(`/api/admins/${id}`, updateData);
+    const response = await axios.patch(`/admins/${id}`, updateData);
 
     return response.data;
   } catch (error) {
@@ -17,7 +17,7 @@ export const patchAdmin = async (id, updateData) => {
 
 export const patchAdminPassword = async (id, currentPassword, newPassword) => {
   try {
-    const response = await axios.patch(`/api/admins/${id}/password`, { currentPassword, newPassword });
+    const response = await axios.patch(`/admins/${id}`, { currentPassword, newPassword });
     return response.data;
   } catch (error) {
     console.error('Error updating password:', error);

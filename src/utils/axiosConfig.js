@@ -6,7 +6,8 @@ dotenv.config();
 
 // Create an instance of axios
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:3000/api', // Adjust the base URL as needed
+  // baseURL: 'http://localhost:3000/api', // Adjust the base URL as needed
+  baseURL: 'https://abdul-shakoor-portfolio.vercel.app/api'
 });
 
 // Add a request interceptor
