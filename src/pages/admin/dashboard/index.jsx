@@ -1,10 +1,21 @@
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 import AdminNavbar from "@/components/navigation/AdminNavbar";
 import useFetchBlogs from "@/utils/useFetchBlogs";
 import useFetchMails from "@/utils/useFetchMails";
 
 const AdminDashboardPage = () => {
+  const router = useRouter();
   const { blogs, loading: blogsLoading, error: blogsError } = useFetchBlogs();
   const { mails, loading: mailsLoading, error: mailsError } = useFetchMails();
+  
+  // Check for token in localStorage and redirect to login if not found
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      router.push('/admin/login'); // Redirect to login page if token is not found
+    }
+  }, [router]);
 
   const stats = {
     blogs: blogs.length,
@@ -16,7 +27,7 @@ const AdminDashboardPage = () => {
   }
 
   if (blogsError || mailsError) {
-    return <div>Error: {blogsError || mailsError}</div>;
+    return <div>Error: {blogsError?.message || mailsError?.message}</div>;
   }
 
   return (
