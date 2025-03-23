@@ -1,57 +1,136 @@
 "use client";
 
-import React, { useState } from "react";
-import { usePathname } from "next/navigation";
-import { MdMenu, MdClose } from "react-icons/md"; // Import icons
-import ThemeToggle from "../buttons/ThemeToggle";
+import React, { useState, useRef } from "react";
+import { MdMenu, MdClose, MdKeyboardArrowDown } from "react-icons/md";
+import Link from "next/link";
 
 const MainNavbar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const pathname = usePathname(); // Get current route
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownTimeoutRef = useRef(null); // Store timeout reference
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  // Function to check if a link is active
-  const getLinkClass = (path) =>
-    pathname === path
-      ? "text-blue-700 dark:text-blue-700 hover:text-blue-500" // Active link styles
-      : "hover:text-gray-500";
+  const handleMouseEnter = () => {
+    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+    setDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setDropdownOpen(false);
+    }, 300); // Delay hiding to avoid instant disappearance
+  };
+
+  const aboutLinks = [
+    { href: "/about/experiences", label: "Experiences" },
+    { href: "/about/research", label: "Research" },
+    { href: "/about/publications", label: "Publications" },
+    { href: "/about/references", label: "References" },
+    { href: "/about", label: "More" },
+  ];
+
+  const mainLinks = [
+    { href: "/", label: "Home" },
+    { href: "/blogs", label: "Blogs" },
+    { href: "/projects", label: "Projects" },
+    { href: "/contact", label: "Contact" },
+  ];
 
   return (
-    <nav className="bg-gray-100 dark:text-white dark:bg-gray-950 text-white border-b-2 border-gray-500">
-      <div className="max-w-7xl mx-auto p-4 flex justify-between items-center">
-        {/* Logo Section */}
-        <div className="text-2xl font-bold text-gray-950">
-          <a href="/" className="dark:text-white">
-            Dr. Abdul Shakoor
-          </a>
-        </div>
+    <nav className="bg-blue-500 w-full text-white">
+      {/* Mobile Menu Button */}
+      <div className="md:hidden flex justify-between items-center px-6 py-3">
+        <Link href="/" className="text-xl font-bold">
+          Dr. Abdul Shakoor
+        </Link>
 
-        {/* Desktop Navigation Links */}
-        <div className="hidden md:flex space-x-8 text-black font-bold dark:text-white">
-          <a href="/" className={getLinkClass("/")}>About</a>
-          <a href="/blogs" className={getLinkClass("/blogs")}>Blogs</a>
-          <a href="/projects" className={getLinkClass("/projects")}>Projects</a>
-          <a href="/contact" className={getLinkClass("/contact")}>Contact</a>
-          <ThemeToggle />
-        </div>
-
-        {/* Mobile Menu Button */}
-        <div className="md:hidden">
-          <button onClick={toggleMobileMenu} className="text-white focus:outline-none text-2xl">
-            {isMobileMenuOpen ? <MdClose /> : <MdMenu />}
-          </button>
-        </div>
+        <button
+          onClick={toggleMobileMenu}
+          className="focus:outline-none text-2xl"
+        >
+          {isMobileMenuOpen ? <MdClose /> : <MdMenu />}
+        </button>
       </div>
 
       {/* Mobile Navigation Links */}
-      <div className={`md:hidden ${isMobileMenuOpen ? "block" : "hidden"} bg-gray-800`}>
-        <a href="/" className={`block py-2 px-6 text-white ${getLinkClass("/")}`}>About</a>
-        <a href="/blogs" className={`block py-2 px-6 text-white ${getLinkClass("/blogs")}`}>Blogs</a>
-        <a href="/projects" className={`block py-2 px-6 text-white ${getLinkClass("/projects")}`}>Projects</a>
-        <a href="/contact" className={`block py-2 px-6 text-white ${getLinkClass("/contact")}`}>Contact</a>
+      <div
+        className={`md:hidden ${isMobileMenuOpen ? "block" : "hidden"} bg-gray-800`}
+      >
+        {mainLinks.map(({ href, label }) => (
+          <Link
+            className="block py-2 px-6 text-white"
+            key={href}
+            href={href}
+          >
+            {label}
+          </Link>
+        ))}
+        <button
+          onClick={() => setDropdownOpen(!isDropdownOpen)}
+          className="flex items-center justify-between w-full py-2 px-6 text-white focus:outline-none"
+        >
+          About <MdKeyboardArrowDown />
+        </button>
+        <div>
+          {isDropdownOpen && (
+            <div className="bg-gray-700">
+              {aboutLinks.map(({ href, label }) => (
+                <Link
+                  className="block py-2 px-6 text-white"
+                  key={href}
+                  href={href}
+                >
+                  {label}
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Desktop View */}
+      <div className="hidden md:flex justify-between items-center px-6 py-3">
+        <Link href="/" className="text-2xl font-bold">
+          Dr. Abdul Shakoor
+        </Link>
+
+        <div className="flex items-center">
+          <div
+            className="relative"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <button className="flex items-center text-white focus:outline-none mr-2">
+              About&nbsp; <MdKeyboardArrowDown className="w-5 h-5" />
+            </button>
+            {isDropdownOpen && (
+              <div className="absolute mt-2 bg-gray-700 rounded-md shadow-lg min-w-[150px]">
+                {aboutLinks.map(({ href, label }) => (
+                  <Link
+                    className="block py-2 px-6 text-white hover:bg-gray-600"
+                    key={href}
+                    href={href}
+                  >
+                    {label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {mainLinks.map(({ href, label }) => (
+            <Link
+              className="text-white px-5 py-2 hover:bg-blue-600 rounded-md transition-colors"
+              key={href}
+              href={href}
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
       </div>
     </nav>
   );

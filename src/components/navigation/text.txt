@@ -1,0 +1,157 @@
+<div className="hidden md:flex space-x-8 text-black font-bold dark:text-white">
+        <div className="max-w-7xl mx-auto py-3 px-6 flex justify-between items-center">
+          {/* Logo Section */}
+         
+          {/* Dropdown for About */}
+
+          <div className="relative group">
+            <button className="flex items-center focus:outline-none">
+              About <MdKeyboardArrowDown className="ml-2" />
+            </button>
+            <div
+              className="
+                absolute left-0 
+                mt-1 w-48 
+                bg-white dark:bg-gray-800 
+                rounded-md shadow-lg 
+                opacity-0 group-hover:opacity-100 
+                transition-opacity duration-300 delay-150 
+                z-10
+              "
+            >
+              <a
+                href="/about/experiences"
+                className={`block px-4 py-2 text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 ${getLinkClass(
+                  "/about/experiences"
+                )}`}
+              >
+                Experiences
+              </a>
+              <a
+                href="/about/education"
+                className={`block px-4 py-2 text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 ${getLinkClass(
+                  "/about/education"
+                )}`}
+              >
+                Education
+              </a>
+              <a
+                href="/about/research"
+                className={`block px-4 py-2 text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 ${getLinkClass(
+                  "/about/research"
+                )}`}
+              >
+                Research
+              </a>
+              <a
+                href="/about/publications"
+                className={`block px-4 py-2 text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 ${getLinkClass(
+                  "/about/publications"
+                )}`}
+              >
+                Publications
+              </a>
+              <a
+                href="/about/references"
+                className={`block px-4 py-2 text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 ${getLinkClass(
+                  "/about/references"
+                )}`}
+              >
+                References
+              </a>
+              <a
+                href="/about"
+                className={`block px-4 py-2 text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 ${getLinkClass(
+                  "/about"
+                )}`}
+              >
+                More
+              </a>
+            </div>
+          </div>
+          <a href="/blogs" className={getLinkClass("/blogs")}>
+            Blogs
+          </a>
+          <a href="/projects" className={getLinkClass("/projects")}>
+            Projects
+          </a>
+          <a href="/contact" className={getLinkClass("/contact")}>
+            Contact
+          </a>
+        </div>
+      </div>
+
+      
+        {/* Dropdown toggle for About */}
+        <div>
+          <button
+            onClick={toggleDropdown}
+            className="flex items-center justify-between w-full py-2 px-6 text-white focus:outline-none"
+          >
+            About <MdKeyboardArrowDown />
+          </button>
+          {isDropdownOpen && (
+            <div className="bg-gray-700">
+              <a
+                href="/about/experiences"
+                className={`block py-2 px-6 text-white ${getLinkClass(
+                  "/about/experiences"
+                )}`}
+              >
+                Experiences
+              </a>
+              <a
+                href="/about/research"
+                className={`block py-2 px-6 text-white ${getLinkClass(
+                  "/about/research"
+                )}`}
+              >
+                Research
+              </a>
+              <a
+                href="/about/publications"
+                className={`block py-2 px-6 text-white ${getLinkClass(
+                  "/about/publications"
+                )}`}
+              >
+                Publications
+              </a>
+              <a
+                href="/about/references"
+                className={`block py-2 px-6 text-white ${getLinkClass(
+                  "/about/references"
+                )}`}
+              >
+                References
+              </a>
+              <a
+                href="/about"
+                className={`block py-2 px-6 text-white ${getLinkClass(
+                  "/about"
+                )}`}
+              >
+                More
+              </a>
+            </div>
+          )}
+        </div>
+        <a
+          href="/blogs"
+          className={`block py-2 px-6 text-white ${getLinkClass("/blogs")}`}
+        >
+          Blogs
+        </a>
+        <a
+          href="/projects"
+          className={`block py-2 px-6 text-white ${getLinkClass("/projects")}`}
+        >
+          Projects
+        </a>
+        <a
+          href="/contact"
+          className={`block py-2 px-6 text-white ${getLinkClass("/contact")}`}
+        >
+          Contact
+        </a>
+      </div>
+
