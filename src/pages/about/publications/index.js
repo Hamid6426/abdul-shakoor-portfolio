@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { publications } from "./publication-data";
+import { publications } from "@/data/publication-data";
 import ResearchPublicationSummary from "@/components/ResearchPublicationSummary";
 
 const Publications = () => {
