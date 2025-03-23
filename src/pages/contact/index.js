@@ -153,12 +153,6 @@ export default function Contact() {
           >
             Linkedin
           </a>
-          <a
-            href="https://wa.me/+923455646565"
-            className="w-[240px] text-center inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300"
-          >
-            Whatsapp
-          </a>
         </section>
       </div>
     </div>
