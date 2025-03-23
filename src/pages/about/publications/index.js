@@ -20,8 +20,6 @@ const Publications = () => {
       <h2 className="my-6 text-3xl font-bold text-blue-600 text-center">
         List of Publications
       </h2>
-      
-      {/* Search Input */}
       <div className="mb-6">
         <input
           type="text"
