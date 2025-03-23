@@ -20,8 +20,11 @@ const MainFooter = () => {
           name: "LinkedIn",
           href: "https://www.linkedin.com/in/dr-abdul-shakoor-66309651/",
         },
-        { name: "WhatsApp", href: "https://wa.me/+923455646565" },
-        { name: "Phone", href: "tel:+923455646565" },
+        { name: "ORCID", href: "https://orcid.org/0000-0003-2101-077X" },
+        {
+          name: "ResearchGate",
+          href: "http://researchgate.net/profile/Dr-Abdul-Shakoor",
+        },
         {
           name: "Faculty UET Peshawar",
           href: "https://www.uetpeshawar.edu.pk/facmech.php",
