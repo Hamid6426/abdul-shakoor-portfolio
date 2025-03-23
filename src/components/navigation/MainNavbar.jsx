@@ -28,7 +28,7 @@ const MainNavbar = () => {
     { href: "/about/experiences", label: "Experiences" },
     { href: "/about/research", label: "Research" },
     { href: "/about/publications", label: "Publications" },
-    { href: "/about/references", label: "References" },
+    { href: "/about/partnerships", label: "Partnerships" },
     { href: "/about", label: "More" },
   ];
 

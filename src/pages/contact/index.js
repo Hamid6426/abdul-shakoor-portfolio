@@ -21,7 +21,6 @@ export default function Contact() {
         subject,
         message,
       });
-
       setStatus("Message sent successfully!");
       setFirstName("");
       setLastName("");
@@ -36,19 +35,20 @@ export default function Contact() {
 
   return (
     <div>
-      <div className="my-8">
-        {/* Form */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold mb-8 text-center text-blue-600">
+          Contact Dr. Abdul Shakoor
+        </h1>
+        {/* Contact Form */}
+
         <form
           onSubmit={handleSubmit}
-          className="border mb-8 border-gray-200 max-w-2xl mx-auto mt-8 p-6 bg-white shadow-xl rounded-lg"
+          className="max-w-2xl mx-auto mt-8 p-6 bg-white border border-gray-200 shadow-xl rounded-lg"
         >
-          <h1 className="text-3xl font-bold mb-8 text-center text-gray-900 dark:text-gray-100">
-            Contact Dr. Abdul Shakoor
-          </h1>
           <div className="mb-6">
             <label
               htmlFor="firstName"
-              className="block text-lg text-gray-700 dark:text-gray-300 mb-2"
+              className="block text-lg font-bold text-gray-700 mb-2"
             >
               First Name
             </label>
@@ -63,7 +63,7 @@ export default function Contact() {
           <div className="mb-6">
             <label
               htmlFor="lastName"
-              className="block text-lg text-gray-700 dark:text-gray-300 mb-2"
+              className="block text-lg font-bold text-gray-700 mb-2"
             >
               Last Name
             </label>
@@ -78,7 +78,7 @@ export default function Contact() {
           <div className="mb-6">
             <label
               htmlFor="email"
-              className="block text-lg text-gray-700 dark:text-gray-300 mb-2"
+              className="block text-lg font-bold text-gray-700 mb-2"
             >
               Email
             </label>
@@ -93,7 +93,7 @@ export default function Contact() {
           <div className="mb-6">
             <label
               htmlFor="subject"
-              className="block text-lg text-gray-700 dark:text-gray-300 mb-2"
+              className="block text-lg font-bold text-gray-700 mb-2"
             >
               Subject
             </label>
@@ -108,7 +108,7 @@ export default function Contact() {
           <div className="mb-6">
             <label
               htmlFor="message"
-              className="block text-lg text-gray-700 dark:text-gray-300 mb-2"
+              className="block text-lg font-bold text-gray-700 mb-2"
             >
               Message
             </label>
@@ -119,7 +119,6 @@ export default function Contact() {
               className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
             />
           </div>
-          {/* Status Message */}
           {status && (
             <p
               className={`mb-4 text-center text-lg ${
@@ -138,15 +137,27 @@ export default function Contact() {
             Send Message
           </button>
         </form>
-        <section className="w-full bg-blue-400 text-white py-12 text-center rounded-lg">
-          <p className="text-xl font-semibold leading-relaxed">
-            Get in touch with me on Gmail
-          </p>
+
+        {/* Call-to-Action Section */}
+        <section className="mx-auto gap-6 mt-8 bg-blue-400 text-white py-8 flex flex-col items-center justify-center rounded-lg shadow-md">
+          <p className="font-semibold text-xl">You can also contact me on</p>
           <a
-            href="mailto:your-email@gmail.com"
-            className="inline-block mt-6 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg  transition duration-300"
+            href="mailto:shakoor@uetpeshawar.edu.pk"
+            className="w-[240px] text-center inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300"
           >
-            Get in Touch
+            Gmail
+          </a>
+          <a
+            href="https://www.linkedin.com/in/dr-abdul-shakoor-66309651/"
+            className="w-[240px] text-center inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300"
+          >
+            Linkedin
+          </a>
+          <a
+            href="https://wa.me/+923455646565"
+            className="w-[240px] text-center inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300"
+          >
+            Whatsapp
           </a>
         </section>
       </div>

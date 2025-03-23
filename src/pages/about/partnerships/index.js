@@ -30,10 +30,10 @@ const references = [
   },
 ];
 
-const References = () => {
+const Partnership = () => {
   return (
-    <div className="max-w-3xl mx-auto p-6 ">
-      <h2 className="text-2xl font-bold mb-4">References</h2>
+    <div className="max-w-3xl mx-auto">
+      <h2 className="text-3xl text-cemter text-blue-600 font-bold mb-6">Partnerships</h2>
       <ul className="flex items-start flex-col gap-6">
         {references.map((ref) => (
           <li key={ref.id} className="bg-white border-gray-200 border w-full p-4 space-y-1 shadow-lg rounded-lg">
@@ -61,4 +61,4 @@ const References = () => {
   );
 };
 
-export default References;
+export default Partnership;
