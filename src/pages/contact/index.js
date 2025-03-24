@@ -153,6 +153,12 @@ export default function Contact() {
           >
             Linkedin
           </a>
+   	  <a
+            href="https://www.facebook.com/share/1B4N5cAd2o/?mibextid=wwXIfr"
+            className="w-[240px] text-center inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition duration-300"
+          >
+            Facebook
+          </a>
         </section>
       </div>
     </div>

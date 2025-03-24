@@ -35,7 +35,6 @@ const MainNavbar = () => {
   const mainLinks = [
     { href: "/", label: "Home" },
     { href: "/blogs", label: "Blogs" },
-    { href: "/projects", label: "Projects" },
     { href: "/contact", label: "Contact" },
   ];
 

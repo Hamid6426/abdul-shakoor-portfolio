@@ -26,8 +26,8 @@ const MainFooter = () => {
           href: "http://researchgate.net/profile/Dr-Abdul-Shakoor",
         },
         {
-          name: "Faculty UET Peshawar",
-          href: "https://www.uetpeshawar.edu.pk/facmech.php",
+          name: "Facebook",
+          href: "https://www.facebook.com/share/1B4N5cAd2o/?mibextid=wwXIfr",
         },
       ],
     },
